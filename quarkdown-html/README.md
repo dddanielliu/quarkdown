@@ -2,7 +2,7 @@
 
 This module provides an extension to render Quarkdown ASTs to:
 - HTML, CSS and JavaScript;
-- PDF (via [Puppeteer](https://pptr.dev)).
+- PDF (via [Playwright](https://playwright.dev)).
 
 ## Options
 

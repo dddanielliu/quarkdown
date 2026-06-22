@@ -11,7 +11,7 @@ When running Quarkdown's [compiler](cli-compiler.qd) via `quarkdown c`, specifyi
 To generate PDF files from HTML, the following dependencies are required:
 - Node.js
 - npm (usually bundled with Node.js)
-- [Puppeteer](https://pptr.dev) (`npm install puppeteer --prefix <quarkdown_dir>/lib`)
+- [Playwright](https://playwright.dev) (`npm install playwright --prefix <quarkdown_dir>/lib`)
 
 Package managers and install scripts already take care of these dependencies.
 

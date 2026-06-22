@@ -15,14 +15,14 @@ import java.io.File
 private const val STARTING_SERVER_PORT = 8096
 
 /**
- * Script-like generator of a PDF from HTML through Puppeteer via Node.js.
+ * Script-like generator of a PDF from HTML through Playwright via Node.js.
  * @param sourcesDirectory directory containing the `index.html` file
  * @param out output PDF file to be written
  * @param node Node.js executable wrapper
  * @param npm NPM executable wrapper
  * @param noSandbox whether to disable Chrome sandbox for PDF export
  */
-class PuppeteerPdfGeneratorScript(
+class PlaywrightPdfGeneratorScript(
     private val sourcesDirectory: File,
     private val out: File,
     private val node: NodeJsWrapper,
@@ -32,11 +32,11 @@ class PuppeteerPdfGeneratorScript(
     private var port: Int? = null
 
     /**
-     * Launches Puppeteer to convert the webpage from [sourcesDirectory] into a PDF saved at [out].
+     * Launches Playwright to convert the webpage from [sourcesDirectory] into a PDF saved at [out].
      * Blocking call.
      */
     fun launch() =
-        NodeNpmHelper(node, npm).launch(PuppeteerNodeModule) {
+        NodeNpmHelper(node, npm).launch(PlaywrightNodeModule) {
             launchServer()
         }
 

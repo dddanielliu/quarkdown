@@ -24,7 +24,7 @@ class DoctorEnvCommand : CliktCommand("env") {
                 listOf(
                     JvmCheck,
                     NodeCheck(node),
-                    NodeModuleCheck(node, NodeModule("puppeteer"), name = "Puppeteer"),
+                    NodeModuleCheck(node, NodeModule("playwright"), name = "Playwright"),
                 )
             echo(render(checks))
         } finally {

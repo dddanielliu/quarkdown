@@ -5,7 +5,7 @@ const noSandbox = process.argv[3] === 'true';
 console.log('outputFile: ' + outputFile);
 console.log('url: ' + url);
 
-const puppeteer = require('puppeteer');
+const { chromium } = require('playwright');
 
 function createArgs() {
     const args = [
@@ -21,11 +21,9 @@ function createArgs() {
     const args = createArgs();
     console.log('Running with args: ' + args);
 
-    const browser = await puppeteer.launch({
+    const browser = await chromium.launch({
         args: args,
-        headless: 'shell',
-        // Timeout is managed externally by the CLI's --timeout flag.
-        protocolTimeout: 0,
+        headless: true,
     });
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);

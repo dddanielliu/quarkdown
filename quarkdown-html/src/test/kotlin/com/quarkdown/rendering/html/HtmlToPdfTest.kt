@@ -5,7 +5,7 @@ import com.quarkdown.interaction.executable.NodeJsWrapper
 import com.quarkdown.interaction.executable.NpmWrapper
 import com.quarkdown.rendering.html.pdf.HtmlPdfExportOptions
 import com.quarkdown.rendering.html.pdf.HtmlPdfExporter
-import com.quarkdown.rendering.html.pdf.PuppeteerNodeModule
+import com.quarkdown.rendering.html.pdf.PlaywrightNodeModule
 import org.apache.pdfbox.Loader
 import org.apache.pdfbox.text.PDFTextStripper
 import org.junit.Assume.assumeTrue
@@ -46,7 +46,7 @@ class HtmlToPdfTest {
         assumeTrue(node.isValid)
         with(NpmWrapper(options.npmPath)) {
             assumeTrue(isValid)
-            assumeTrue(isInstalled(node, PuppeteerNodeModule))
+            assumeTrue(isInstalled(node, PlaywrightNodeModule))
         }
 
         val html = File(directory, "index.html")

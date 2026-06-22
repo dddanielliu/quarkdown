@@ -22,7 +22,7 @@ private fun node(workingDirectory: File) = NodeJsWrapper(NodeJsWrapper.defaultPa
  * @see NpmWrapper
  */
 class NodeNpmWrapperTest {
-    private data object PuppeteerNodeModule : NodeModule("puppeteer")
+    private data object PlaywrightNodeModule : NodeModule("playwright")
 
     private val directory: File =
         createTempDirectory()

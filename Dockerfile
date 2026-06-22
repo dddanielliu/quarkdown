@@ -40,6 +40,8 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=true npm install playwright --prefix /root
+
 ENV QD_NPM_PREFIX="/root" \
     NODE_PATH="/root/node_modules"
 

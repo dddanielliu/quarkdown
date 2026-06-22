@@ -38,7 +38,7 @@ function createArgs() {
     console.log('Connected. Waiting for page to be ready.');
     await page.waitForFunction('window.isReady()');
 
-    const body = await page.$('body');
+    const body = page.locator('body');
 
     // Plain documents render as a single-page PDF.
     const isSinglePage = await body.evaluate(bodyElement => bodyElement.classList.contains('quarkdown-plain'));

@@ -8,6 +8,6 @@ import java.io.File
  * @param noSandbox whether to disable Chrome sandbox for PDF export from HTML. Potentially unsafe
  */
 data class HtmlPdfExportOptions(
-    val outputDirectory: File? = null,
+    val outputDirectory: File,
     val noSandbox: Boolean = false,
 )

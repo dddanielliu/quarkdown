@@ -21,6 +21,7 @@ class HtmlToPdfTest {
 
     private val options =
         HtmlPdfExportOptions(
+            outputDirectory = directory,
             noSandbox = true,
         )
 

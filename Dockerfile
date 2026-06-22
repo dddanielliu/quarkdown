@@ -27,6 +27,9 @@ RUN unzip quarkdown.zip && rm quarkdown.zip
 # Run stage
 FROM mcr.microsoft.com/playwright:v1.61.0-noble AS runner
 
+ENV QD_NPM_PREFIX="/home/pwuser" \
+    NODE_PATH="/home/pwuser/node_modules"
+
 # Install fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai, etc.),
 # matching the font coverage previously provided by the Puppeteer image.
 RUN apt-get update \
@@ -40,10 +43,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=true npm install playwright --prefix /root
+USER pwuser
 
-ENV QD_NPM_PREFIX="/root" \
-    NODE_PATH="/root/node_modules"
+RUN PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=true npm install playwright --prefix ${QD_NPM_PREFIX}
 
 WORKDIR /app
 COPY --from=builder /app/build/distributions/quarkdown quarkdown

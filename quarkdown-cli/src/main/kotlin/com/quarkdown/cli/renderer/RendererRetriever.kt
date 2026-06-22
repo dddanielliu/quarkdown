@@ -51,8 +51,6 @@ class RendererRetriever(
     private fun createHtmlPdfExportOptions() =
         HtmlPdfExportOptions(
             outputDirectory = requireNotNull(options.outputDirectory) { "Output directory must be specified for PDF export." },
-            nodeJsPath = options.nodePath,
-            npmPath = options.npmPath,
             noSandbox = options.noPdfSandbox,
         )
 }

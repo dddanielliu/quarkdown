@@ -26,8 +26,6 @@ import com.quarkdown.core.pipeline.error.BasePipelineErrorHandler
 import com.quarkdown.core.pipeline.error.StrictPipelineErrorHandler
 import com.quarkdown.core.util.kebabCaseName
 import com.quarkdown.installlayout.InstallLayout
-import com.quarkdown.interaction.executable.NodeJsWrapper
-import com.quarkdown.interaction.executable.NpmWrapper
 import java.io.File
 
 /**
@@ -188,18 +186,6 @@ abstract class ExecuteCommand(
         .default(DEFAULT_SERVER_PORT)
 
     /**
-     * Path to the Node.js executable, needed for PDF export.
-     */
-    private val nodePath: String by option("--node-path", help = "Path to the Node.js executable")
-        .default(NodeJsWrapper.defaultPath)
-
-    /**
-     * Path to the npm executable, needed for PDF export.
-     */
-    private val npmPath: String by option("--npm-path", help = "Path to the npm executable")
-        .default(NpmWrapper.defaultPath)
-
-    /**
      * Maximum time, in seconds, allowed for the entire execution (pipeline + export) to complete.
      * `null` or non-positive disables the timeout. Subclasses may override to provide a value.
      */
@@ -217,8 +203,6 @@ abstract class ExecuteCommand(
             renderer,
             clean,
             pipe = false,
-            nodePath,
-            npmPath,
         ).let(::finalizeCliOptions)
 
     /**

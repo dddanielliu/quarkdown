@@ -18,10 +18,6 @@ jobs:
     steps:
     - uses: ./.github/actions/setup-environment
 
-    - name: Setup Chrome
-      uses: browser-actions/setup-chrome@v1.7.3
-      id: setup-chrome
-
     - name: Build distribution
       uses: burrunan/gradle-cache-action@v3
       with:

@@ -9,10 +9,6 @@ import com.quarkdown.core.permissions.Permission
 import com.quarkdown.core.pipeline.PipelineOptions
 import com.quarkdown.core.pipeline.error.BasePipelineErrorHandler
 import com.quarkdown.core.pipeline.error.StrictPipelineErrorHandler
-import com.quarkdown.interaction.Env
-import com.quarkdown.interaction.executable.NodeJsWrapper
-import com.quarkdown.interaction.executable.NpmWrapper
-import com.quarkdown.rendering.html.pdf.PlaywrightNodeModule
 import org.apache.pdfbox.Loader
 import org.junit.Assume.assumeTrue
 import java.io.File
@@ -332,13 +328,11 @@ class CompileCommandTest : TempDirectory() {
     }
 
     private fun assumePdfEnvironmentInstalled() {
-        assumeTrue(Env.npmPrefix != null)
-        assumeTrue(Env.nodePath != null)
-        val node = NodeJsWrapper(NodeJsWrapper.defaultPath, workingDirectory = directory)
-        assumeTrue(node.isValid)
-        with(NpmWrapper(NpmWrapper.defaultPath)) {
-            assumeTrue(isValid)
-            assumeTrue(isInstalled(node, PlaywrightNodeModule))
+        // Playwright Java SDK is available at compile time; runtime requires browsers to be installed.
+        try {
+            Class.forName("com.microsoft.playwright.Playwright")
+        } catch (_: Exception) {
+            org.junit.Assume.assumeTrue(false)
         }
     }
 
@@ -423,21 +417,6 @@ class CompileCommandTest : TempDirectory() {
     fun `pdf via explicit html-pdf`() {
         assumePdfEnvironmentInstalled()
         val (_, _) = test("--render", "html-pdf", "--pdf-no-sandbox")
-        checkPdf()
-    }
-
-    @Test
-    fun `pdf with node and npm set`() {
-        assumePdfEnvironmentInstalled()
-        val (_, _) =
-            test(
-                "--pdf",
-                "--pdf-no-sandbox",
-                "--node-path",
-                NodeJsWrapper.defaultPath,
-                "--npm-path",
-                NpmWrapper.defaultPath,
-            )
         checkPdf()
     }
 

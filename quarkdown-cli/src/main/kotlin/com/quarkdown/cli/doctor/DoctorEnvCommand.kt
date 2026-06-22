@@ -5,31 +5,18 @@ import com.github.ajalt.mordant.rendering.TextColors.gray
 import com.github.ajalt.mordant.rendering.TextColors.green
 import com.github.ajalt.mordant.rendering.TextColors.red
 import com.github.ajalt.mordant.rendering.TextStyles.bold
-import com.quarkdown.core.log.Log
-import com.quarkdown.interaction.executable.NodeJsWrapper
-import com.quarkdown.interaction.executable.NodeModule
-import kotlin.io.path.createTempDirectory
 
 /**
- * Reports the status of external runtimes used by Quarkdown:
- * whether each was found, its installation path, and its version.
+ * Reports the status of external runtimes used by Quarkdown.
  */
 class DoctorEnvCommand : CliktCommand("env") {
     override fun run() {
-        // Run Node from a temp directory not to pick up a stray `node_modules`.
-        val workingDirectory = createTempDirectory("quarkdown-doctor-env-").toFile()
-        try {
-            val node = NodeJsWrapper(NodeJsWrapper.defaultPath, workingDirectory = workingDirectory)
-            val checks: List<EnvironmentCheck> =
-                listOf(
-                    JvmCheck,
-                    NodeCheck(node),
-                    NodeModuleCheck(node, NodeModule("playwright"), name = "Playwright"),
-                )
-            echo(render(checks))
-        } finally {
-            workingDirectory.deleteRecursively()
-        }
+        val checks: List<EnvironmentCheck> =
+            listOf(
+                JvmCheck,
+                PlaywrightCheck,
+            )
+        echo(render(checks))
     }
 }
 
@@ -38,7 +25,7 @@ class DoctorEnvCommand : CliktCommand("env") {
  */
 private interface EnvironmentCheck {
     /**
-     * Name of the runtime being checked, e.g. "Node".
+     * Name of the runtime being checked, e.g. "JVM".
      */
     val name: String
 
@@ -63,7 +50,6 @@ private abstract class GuardedEnvironmentCheck(
 ) : EnvironmentCheck {
     final override fun check(): EnvironmentCheck.Result =
         runCatching { detect() }.getOrElse {
-            Log.debug(it)
             EnvironmentCheck.Result(found = false)
         }
 
@@ -85,33 +71,18 @@ private object JvmCheck : EnvironmentCheck {
 }
 
 /**
- * Detects the Node.js runtime.
+ * Detects the Playwright Java API by attempting to load the Playwright class.
  */
-private class NodeCheck(
-    private val node: NodeJsWrapper,
-) : GuardedEnvironmentCheck("Node") {
-    override fun detect() =
-        EnvironmentCheck.Result(
+private object PlaywrightCheck : GuardedEnvironmentCheck("Playwright") {
+    override fun detect(): EnvironmentCheck.Result {
+        val playwrightClass = Class.forName("com.microsoft.playwright.Playwright")
+        val pkg = playwrightClass.`package`
+        return EnvironmentCheck.Result(
             found = true,
-            path = node.getProcessPath(),
-            version = node.getVersion(),
+            path = playwrightClass.protectionDomain.codeSource.location.toExternalForm(),
+            version = pkg?.implementationVersion ?: pkg?.specificationVersion ?: "unknown",
         )
-}
-
-/**
- * Detects a Node.js [module] resolvable from [node].
- */
-private class NodeModuleCheck(
-    private val node: NodeJsWrapper,
-    private val module: NodeModule,
-    name: String,
-) : GuardedEnvironmentCheck(name) {
-    override fun detect() =
-        EnvironmentCheck.Result(
-            found = true,
-            path = node.getModulePath(module),
-            version = node.getModuleVersion(module),
-        )
+    }
 }
 
 private const val FOUND_BADGE = "✓ found"

@@ -2,10 +2,6 @@
 FROM gradle:8.14.3-jdk17 AS builder
 
 USER root
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends nodejs npm \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /app && chown -R gradle:gradle /app
 
 USER gradle
@@ -27,9 +23,6 @@ RUN unzip quarkdown.zip && rm quarkdown.zip
 # Run stage
 FROM mcr.microsoft.com/playwright:v1.61.0-noble AS runner
 
-ENV QD_NPM_PREFIX="/home/pwuser" \
-    NODE_PATH="/home/pwuser/node_modules"
-
 # Install fonts present in the Puppeteer image but missing from Playwright.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -39,10 +32,6 @@ RUN apt-get update \
         fonts-thai-tlwg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-USER pwuser
-
-RUN PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=true npm install playwright --prefix ${QD_NPM_PREFIX}
 
 WORKDIR /app
 COPY --from=builder /app/build/distributions/quarkdown quarkdown

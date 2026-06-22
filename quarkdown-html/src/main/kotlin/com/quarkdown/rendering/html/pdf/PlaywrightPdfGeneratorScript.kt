@@ -74,8 +74,8 @@ class PlaywrightPdfGeneratorScript(
             val browser: Browser = playwright.chromium().launch(launchOptions)
             try {
                 val page: Page = browser.newPage()
-                page.setDefaultNavigationTimeout(0)
-                page.setDefaultTimeout(0)
+                page.setDefaultNavigationTimeout(0.0)
+                page.setDefaultTimeout(0.0)
 
                 Log.info("Connecting to $url")
                 page.navigate(url)
@@ -97,7 +97,6 @@ class PlaywrightPdfGeneratorScript(
                         .setPath(out.toPath())
                         .setPrintBackground(true)
                         .setPreferCSSPageSize(true)
-                        .setTimeout(0)
 
                 if (isSinglePage) {
                     val clientHeight =

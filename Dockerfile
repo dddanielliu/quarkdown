@@ -37,6 +37,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+USER pwuser
 WORKDIR /app
 COPY --from=builder /app/build/distributions/quarkdown quarkdown
 ENV PATH="/app/quarkdown/bin:${PATH}"

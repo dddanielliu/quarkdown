@@ -9,6 +9,7 @@ import com.quarkdown.core.log.Log
 import com.quarkdown.server.LocalFileWebServer
 import com.quarkdown.server.withScanner
 import java.io.File
+import java.nio.file.Paths
 
 /**
  * The starting port to attempt to start the server on.
@@ -72,6 +73,11 @@ class PlaywrightPdfGeneratorScript(
                             if (noSandbox) add("--no-sandbox")
                         },
                     )
+
+            // The Java SDK does not read PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH automatically, unlike the Node.js CLI.
+            System.getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
+                ?.let { launchOptions.setExecutablePath(Paths.get(it)) }
+
             val browser: Browser = playwright.chromium().launch(launchOptions)
             try {
                 val page: Page = browser.newPage()

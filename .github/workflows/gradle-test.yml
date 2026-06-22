@@ -20,30 +20,10 @@ jobs:
       with:
         full-checkout: ${{ inputs.full-checkout }}
 
-    - name: Checkout Repository (Windows)
+    - uses: ./.github/actions/setup-environment
       if: matrix.os == 'windows-latest'
-      uses: actions/checkout@v4
-
-    - name: Set up JDK 17 (Windows)
-      if: matrix.os == 'windows-latest'
-      uses: actions/setup-java@v4
       with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    - name: Setup Gradle (Windows)
-      if: matrix.os == 'windows-latest'
-      uses: gradle/actions/setup-gradle@v3
-
-    - name: Setup Chrome (Windows)
-      if: matrix.os == 'windows-latest'
-      uses: browser-actions/setup-chrome@v1
-      id: setup-chrome-windows
-
-    - name: Set Playwright's executable path (Windows)
-      if: matrix.os == 'windows-latest'
-      run: echo "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=${{ steps.setup-chrome-windows.outputs.chrome-path }}" >> $env:GITHUB_ENV
-      shell: pwsh
+        full-checkout: ${{ inputs.full-checkout }}
 
     - name: Run tests
       uses: burrunan/gradle-cache-action@v3

@@ -21,7 +21,7 @@ WORKDIR build/distributions
 RUN unzip quarkdown.zip && rm quarkdown.zip
 
 # Run stage
-FROM mcr.microsoft.com/playwright:v1.61.0-noble AS runner
+FROM mcr.microsoft.com/playwright:v1.60.0-noble AS runner
 
 # Install fonts present in the Puppeteer image but missing from Playwright.
 RUN apt-get update \

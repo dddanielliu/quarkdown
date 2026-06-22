@@ -29,6 +29,9 @@ runs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@v1
       id: setup-chrome
@@ -36,4 +39,10 @@ runs:
     - name: Set Playwright's executable path
       run: |
         echo "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=${{ steps.setup-chrome.outputs.chrome-path }}" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Install Playwright browsers
+      run: |
+        npm install @playwright/test@^1.60
+        npx playwright install chromium
       shell: bash

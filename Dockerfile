@@ -27,6 +27,19 @@ RUN unzip quarkdown.zip && rm quarkdown.zip
 # Run stage
 FROM mcr.microsoft.com/playwright:v1.61.0-noble AS runner
 
+# Install fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai, etc.),
+# matching the font coverage previously provided by the Puppeteer image.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        fonts-ipafont-gothic \
+        fonts-wqy-zenhei \
+        fonts-thai-tlwg \
+        fonts-khmeros \
+        fonts-kacst \
+        fonts-freefont-ttf \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV QD_NPM_PREFIX="/root" \
     NODE_PATH="/root/node_modules"
 

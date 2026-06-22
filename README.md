@@ -311,7 +311,7 @@ or build it with `gradlew installDist`.
 Optionally, adding `<install_dir>/bin` to your `PATH` allows you easier access Quarkdown.
 
 Requirements:
-- (Only for PDF export) Node.js, npm, Playwright. See [*PDF export*](https://quarkdown.com/wiki/pdf-export) for details.
+- (Only for PDF export) Playwright Java API (bundled). See [*PDF export*](https://quarkdown.com/wiki/pdf-export) for details.
 
 </details>
 

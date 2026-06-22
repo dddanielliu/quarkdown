@@ -12,8 +12,6 @@ import java.io.File
  * @param rendererName name of the renderer to use to generate the output for
  * @param clean whether to clean the output directory before generating new files
  * @param pipe whether to output the rendered result to standard output, suitable for piping
- * @param nodePath path to the Node.js executable
- * @param npmPath path to the npm executable
  * @param exportPdf whether to generate a PDF file
  * @param noPdfSandbox whether to disable the Chrome sandbox for PDF export
  */
@@ -24,8 +22,6 @@ data class CliOptions(
     val rendererName: String,
     val clean: Boolean,
     val pipe: Boolean,
-    val nodePath: String,
-    val npmPath: String,
     val exportPdf: Boolean = false,
     val noPdfSandbox: Boolean = false,
 ) {

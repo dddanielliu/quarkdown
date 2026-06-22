@@ -15,7 +15,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: iamgio/quarkdown/.github/actions/setup-environment@main
+    - uses: ./.github/actions/setup-environment
       if: matrix.os == 'ubuntu-latest'
       with:
         full-checkout: ${{ inputs.full-checkout }}
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: iamgio/quarkdown/.github/actions/setup-environment@main
+    - uses: ./.github/actions/setup-environment
       with:
         full-checkout: ${{ inputs.full-checkout }}
 
@@ -78,7 +78,7 @@ jobs:
         shard: [1, 2, 3, 4]
 
     steps:
-    - uses: iamgio/quarkdown/.github/actions/setup-environment@main
+    - uses: ./.github/actions/setup-environment
       with:
         full-checkout: ${{ inputs.full-checkout }}
 

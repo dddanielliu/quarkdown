@@ -75,7 +75,8 @@ class PlaywrightPdfGeneratorScript(
                     )
 
             // The Java SDK does not read PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH automatically, unlike the Node.js CLI.
-            System.getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
+            System
+                .getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
                 ?.let { launchOptions.setExecutablePath(Paths.get(it)) }
 
             val browser: Browser = playwright.chromium().launch(launchOptions)

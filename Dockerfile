@@ -30,16 +30,13 @@ FROM mcr.microsoft.com/playwright:v1.61.0-noble AS runner
 ENV QD_NPM_PREFIX="/home/pwuser" \
     NODE_PATH="/home/pwuser/node_modules"
 
-# Install fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai, etc.),
-# matching the font coverage previously provided by the Puppeteer image.
+# Install fonts present in the Puppeteer image but missing from Playwright.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        fonts-ipafont-gothic \
-        fonts-wqy-zenhei \
-        fonts-thai-tlwg \
-        fonts-khmeros \
+        fonts-dejavu-core \
         fonts-kacst \
-        fonts-freefont-ttf \
+        fonts-khmeros \
+        fonts-thai-tlwg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

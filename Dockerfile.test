@@ -1,0 +1,34 @@
+FROM gradle:8.14.3-jdk17
+
+# Install Node.js for front-end asset bundling
+# Install Playwright system dependencies for Chromium browser
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        nodejs npm \
+        libglib2.0-0t64 libnspr4 libnss3 libatk1.0-0t64 \
+        libatk-bridge2.0-0t64 libdbus-1-3 libcups2t64 libxcb1 \
+        libxkbcommon0 libasound2t64 libgbm1 libx11-6 libxext6 \
+        libcairo2 libpango-1.0-0 libxcomposite1 libxdamage1 \
+        libxfixes3 libxrandr2 libatspi2.0-0t64 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN mkdir -p /ms-playwright && chown -R gradle:gradle /ms-playwright
+
+USER gradle
+
+WORKDIR /app
+
+COPY --chown=gradle:gradle . /app
+
+# Install npm dependencies (front-end libraries, esbuild, Playwright CLI)
+RUN gradle --no-daemon :quarkdown-html:npmInstall
+
+# Install all browsers using the locally-resolved @playwright/test version (1.60.0)
+# so the browser revisions match Playwright Java SDK 1.60.0.
+RUN cd quarkdown-html && npx playwright install
+
+# Run the failing test with verbose output
+CMD gradle --no-daemon :quarkdown-cli:test --tests "*single-page pdf*" --info

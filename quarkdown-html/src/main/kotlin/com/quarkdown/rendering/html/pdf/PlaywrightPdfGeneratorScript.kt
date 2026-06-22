@@ -2,6 +2,7 @@ package com.quarkdown.rendering.html.pdf
 
 import com.microsoft.playwright.Browser
 import com.microsoft.playwright.BrowserType
+import com.microsoft.playwright.Locator
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import com.quarkdown.core.log.Log
@@ -86,7 +87,7 @@ class PlaywrightPdfGeneratorScript(
                 Log.info("Connected. Waiting for page to be ready.")
                 page.waitForFunction("window.isReady()")
 
-                val body = page.locator("body")
+                val body: Locator = page.locator("body")
 
                 // Plain documents render as a single-page PDF.
                 val isSinglePage = body.evaluate("el => el.classList.contains('quarkdown-plain')", null) as Boolean
@@ -101,10 +102,11 @@ class PlaywrightPdfGeneratorScript(
                         .setPreferCSSPageSize(true)
 
                 if (isSinglePage) {
+                    val clientWidth = body.evaluate("el => el.clientWidth", null) as Number
                     val clientHeight = body.evaluate("el => el.clientHeight", null) as Number
-                    pdfOptions.setHeight(
-                        (clientHeight.toDouble() * singlePageHeightMultiplier + singlePageHeightPadding).toString() + "px",
-                    )
+                    val height =
+                        clientHeight.toDouble() * singlePageHeightMultiplier + singlePageHeightPadding
+                    pdfOptions.setWidth("${clientWidth}px").setHeight("${height}px")
                 }
 
                 page.pdf(pdfOptions)

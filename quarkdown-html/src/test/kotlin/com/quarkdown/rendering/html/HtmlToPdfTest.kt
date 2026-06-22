@@ -2,8 +2,6 @@ package com.quarkdown.rendering.html
 
 import com.quarkdown.rendering.html.pdf.HtmlPdfExportOptions
 import com.quarkdown.rendering.html.pdf.HtmlPdfExporter
-import com.quarkdown.server.LocalFileWebServer
-import com.quarkdown.server.withScanner
 import org.apache.pdfbox.Loader
 import org.apache.pdfbox.text.PDFTextStripper
 import java.io.File
@@ -11,7 +9,6 @@ import kotlin.io.path.createTempDirectory
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**

@@ -79,7 +79,9 @@ private object PlaywrightCheck : GuardedEnvironmentCheck("Playwright") {
         val pkg = playwrightClass.`package`
         return EnvironmentCheck.Result(
             found = true,
-            path = playwrightClass.protectionDomain.codeSource.location.toExternalForm(),
+            path =
+                playwrightClass.protectionDomain.codeSource.location
+                    .toExternalForm(),
             version = pkg?.implementationVersion ?: pkg?.specificationVersion ?: "unknown",
         )
     }

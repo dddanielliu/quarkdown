@@ -64,7 +64,8 @@ class PlaywrightPdfGeneratorScript(
 
         Playwright.create().use { playwright ->
             val launchOptions =
-                BrowserType.LaunchOptions()
+                BrowserType
+                    .LaunchOptions()
                     .setHeadless(true)
                     .setArgs(
                         mutableListOf("--disable-gpu").apply {
@@ -93,7 +94,8 @@ class PlaywrightPdfGeneratorScript(
                 val singlePageHeightMultiplier = 1.03
 
                 val pdfOptions =
-                    Page.PdfOptions()
+                    Page
+                        .PdfOptions()
                         .setPath(out.toPath())
                         .setPrintBackground(true)
                         .setPreferCSSPageSize(true)

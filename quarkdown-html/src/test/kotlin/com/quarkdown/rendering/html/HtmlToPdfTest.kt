@@ -22,7 +22,6 @@ class HtmlToPdfTest {
     private val options =
         HtmlPdfExportOptions(
             outputDirectory = directory,
-            noSandbox = true,
         )
 
     @BeforeTest
@@ -56,7 +55,7 @@ class HtmlToPdfTest {
         println(directory.list().contentToString())
 
         val out = File(directory, "out.pdf")
-        HtmlPdfExporter(options).export(directory, out)
+        HtmlPdfExporter(options.copy(noSandbox = true)).export(directory, out)
 
         assertTrue(out.exists())
 

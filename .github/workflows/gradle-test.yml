@@ -15,7 +15,8 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: ./.github/actions/setup-environment
+    - uses: actions/checkout@v4 # can be deleted after merge
+    - uses: ./.github/actions/setup-environment # can be changed back after merge
       if: matrix.os == 'ubuntu-latest'
       with:
         full-checkout: ${{ inputs.full-checkout }}
@@ -45,7 +46,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: ./.github/actions/setup-environment
+    - uses: actions/checkout@v4 # can be deleted after merge
+    - uses: ./.github/actions/setup-environment # can be changed back after merge
       with:
         full-checkout: ${{ inputs.full-checkout }}
 
@@ -78,7 +80,8 @@ jobs:
         shard: [1, 2, 3, 4]
 
     steps:
-    - uses: ./.github/actions/setup-environment
+    - uses: actions/checkout@v4 # can be deleted after merge
+    - uses: ./.github/actions/setup-environment # can be changed back after merge
       with:
         full-checkout: ${{ inputs.full-checkout }}
 

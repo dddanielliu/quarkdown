@@ -8,7 +8,6 @@ import com.quarkdown.core.log.Log
 import com.quarkdown.server.LocalFileWebServer
 import com.quarkdown.server.withScanner
 import java.io.File
-import kotlin.math.roundToInt
 
 /**
  * The starting port to attempt to start the server on.
@@ -87,9 +86,10 @@ class PlaywrightPdfGeneratorScript(
                 Log.info("Connected. Waiting for page to be ready.")
                 page.waitForFunction("window.isReady()")
 
+                val body = page.locator("body")
+
                 // Plain documents render as a single-page PDF.
-                val isSinglePage =
-                    page.evaluate("document.querySelector('body').classList.contains('quarkdown-plain')") as Boolean
+                val isSinglePage = body.evaluate("el => el.classList.contains('quarkdown-plain')", null) as Boolean
                 val singlePageHeightPadding = 100
                 val singlePageHeightMultiplier = 1.03
 
@@ -101,10 +101,9 @@ class PlaywrightPdfGeneratorScript(
                         .setPreferCSSPageSize(true)
 
                 if (isSinglePage) {
-                    val clientHeight =
-                        (page.evaluate("document.querySelector('body').clientHeight") as Number).toInt()
+                    val clientHeight = body.evaluate("el => el.clientHeight", null) as Number
                     pdfOptions.setHeight(
-                        ((clientHeight * singlePageHeightMultiplier + singlePageHeightPadding).roundToInt()).toString() + "px",
+                        (clientHeight.toDouble() * singlePageHeightMultiplier + singlePageHeightPadding).toString() + "px",
                     )
                 }
 

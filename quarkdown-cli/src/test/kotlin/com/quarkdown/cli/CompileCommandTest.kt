@@ -12,7 +12,7 @@ import com.quarkdown.core.pipeline.error.StrictPipelineErrorHandler
 import com.quarkdown.interaction.Env
 import com.quarkdown.interaction.executable.NodeJsWrapper
 import com.quarkdown.interaction.executable.NpmWrapper
-import com.quarkdown.rendering.html.pdf.PuppeteerNodeModule
+import com.quarkdown.rendering.html.pdf.PlaywrightNodeModule
 import org.apache.pdfbox.Loader
 import org.junit.Assume.assumeTrue
 import java.io.File
@@ -338,7 +338,7 @@ class CompileCommandTest : TempDirectory() {
         assumeTrue(node.isValid)
         with(NpmWrapper(NpmWrapper.defaultPath)) {
             assumeTrue(isValid)
-            assumeTrue(isInstalled(node, PuppeteerNodeModule))
+            assumeTrue(isInstalled(node, PlaywrightNodeModule))
         }
     }
 

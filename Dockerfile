@@ -25,13 +25,11 @@ WORKDIR build/distributions
 RUN unzip quarkdown.zip && rm quarkdown.zip
 
 # Run stage
-FROM ghcr.io/puppeteer/puppeteer:24.15.0 AS runner
+FROM mcr.microsoft.com/playwright:v1.61.0-noble AS runner
 
-ENV QD_NPM_PREFIX="/home/pptruser" \
-    NODE_PATH="/home/pptruser/node_modules" \
-    PUPPETEER_CACHE_DIR="/home/pptruser/.cache/puppeteer"
+ENV QD_NPM_PREFIX="/root" \
+    NODE_PATH="/root/node_modules"
 
-USER pptruser
 WORKDIR /app
 COPY --from=builder /app/build/distributions/quarkdown quarkdown
 ENV PATH="/app/quarkdown/bin:${PATH}"

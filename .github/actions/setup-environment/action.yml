@@ -36,9 +36,9 @@ runs:
       uses: browser-actions/setup-chrome@v1
       id: setup-chrome
 
-    - name: Set Puppeteer's executable path
+    - name: Set Playwright's executable path
       run: |
-        echo "PUPPETEER_EXECUTABLE_PATH=${{ steps.setup-chrome.outputs.chrome-path }}" >> $GITHUB_ENV
+        echo "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=${{ steps.setup-chrome.outputs.chrome-path }}" >> $GITHUB_ENV
       shell: bash
 
     - name: Set npm environment variables
@@ -48,8 +48,8 @@ runs:
         echo "NODE_PATH=$HOME/.npm-global/lib/node_modules" >> $GITHUB_ENV
       shell: bash
 
-    - name: Install Puppeteer
+    - name: Install Playwright
       run: |
-        export PUPPETEER_SKIP_DOWNLOAD=true
-        npm install puppeteer --prefix ${{ env.QD_NPM_PREFIX }}
+        export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=true
+        npm install playwright --prefix ${{ env.QD_NPM_PREFIX }}
       shell: bash

@@ -1,4 +1,4 @@
-name: PDF generation via Puppeteer
+name: PDF generation via Playwright
 
 on:
   push:

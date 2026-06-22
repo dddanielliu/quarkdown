@@ -11,7 +11,7 @@ import {DocsDocument} from "./document/type/docs-document";
 
 /**
  * Returns whether the document is finalized and ready.
- * This can be watched and waited for by other tools, such as Puppeteer to generate a PDF.
+ * This can be watched and waited for by other tools, such as Playwright to generate a PDF.
  * @returns {boolean}
  */
 function isReady(): boolean {

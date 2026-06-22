@@ -2,7 +2,7 @@
   <configuration default="false" name="CLI: Mock" type="JetRunConfigurationType">
     <envs>
       <env name="NODE_PATH" value="/opt/homebrew/Cellar/quarkdown/2.0.1/libexec/lib/node_modules" />
-      <env name="PUPPETEER_CACHE_DIR" value="$USER_HOME$/Library/Caches/Homebrew/puppeteer" />
+      <env name="PLAYWRIGHT_BROWSERS_PATH" value="$USER_HOME$/Library/Caches/ms-playwright" />
       <env name="QD_NPM_PREFIX" value="/opt/homebrew/Cellar/quarkdown/2.0.1/libexec/lib" />
     </envs>
     <option name="MAIN_CLASS_NAME" value="com.quarkdown.cli.QuarkdownCliKt" />

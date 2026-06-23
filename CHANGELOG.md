@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [2.3.3] - 2026-06-23
+
 ## [2.3.2] - 2026-06-23
 
 ## [2.3.1] - 2026-06-23
@@ -984,7 +986,9 @@ Table of contents are no longer empty if no level 1 headings are present, or if 
 
 Table cells now correctly apply the same line spacing as paragraphs and lists.
 
-[Unreleased]: https://github.com/dddanielliu/quarkdown/compare/v2.3.2...HEAD
+[Unreleased]: https://github.com/dddanielliu/quarkdown/compare/v2.3.3...HEAD
+
+[2.3.3]: https://github.com/dddanielliu/quarkdown/compare/v2.3.2...v2.3.3
 
 [2.3.2]: https://github.com/dddanielliu/quarkdown/compare/v2.3.1...v2.3.2
 

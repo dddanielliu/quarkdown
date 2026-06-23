@@ -197,10 +197,6 @@ jobs:
           type=semver,pattern={{version}}
           type=semver,pattern={{major}}.{{minor}}
           type=semver,pattern={{major}}
-        labels: |
-          org.opencontainers.image.title=Quarkdown Docker image
-          org.opencontainers.image.description=Versatile Markdown-based typsetting system.
-          org.opencontainers.image.url=https://quarkdown.com
         annotations: |
           org.opencontainers.image.title=Quarkdown Docker image
           org.opencontainers.image.description=Versatile Markdown-based typsetting system.
@@ -215,7 +211,6 @@ jobs:
         push: true
         platforms: linux/amd64
         tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
         annotations: ${{ steps.meta.outputs.annotations }}
 
   dependency-submission:

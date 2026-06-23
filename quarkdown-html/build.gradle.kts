@@ -14,10 +14,10 @@ dependencies {
     testImplementation(testFixtures(project(":quarkdown-core")))
     testImplementation("org.apache.pdfbox:pdfbox:3.0.6")
     implementation(project(":quarkdown-core"))
-    implementation(project(":quarkdown-interaction"))
     implementation(project(":quarkdown-server"))
     implementation(project(":quarkdown-plaintext")) // For search index generation
     implementation(project(":quarkdown-install-layout-navigator"))
+    implementation("com.microsoft.playwright:playwright:1.60.0")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.12.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 }

@@ -1,10 +1,13 @@
-build/
-**/build/
-.git/
+**/node_modules
+**/.gradle
+**/build
+.git
 .github/
 .run/
 demo/
 docs/
 mock/
 *.md
+*.zip
+*.tar.gz
 .typos.toml

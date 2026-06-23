@@ -15,7 +15,8 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: iamgio/quarkdown/.github/actions/setup-environment@main
+    - uses: actions/checkout@v4 # can be deleted after merge
+    - uses: ./.github/actions/setup-environment # can be changed back after merge
       if: matrix.os == 'ubuntu-latest'
       with:
         full-checkout: ${{ inputs.full-checkout }}
@@ -35,6 +36,17 @@ jobs:
       if: matrix.os == 'windows-latest'
       uses: gradle/actions/setup-gradle@v3
 
+    - name: Setup Chrome (Windows)
+      if: matrix.os == 'windows-latest'
+      uses: browser-actions/setup-chrome@v1
+      id: setup-chrome-windows
+
+    - name: Set Playwright executable path (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        echo "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=${{ steps.setup-chrome-windows.outputs.chrome-path }}" >> $env:GITHUB_ENV
+        echo "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1" >> $env:GITHUB_ENV
+
     - name: Run tests
       uses: burrunan/gradle-cache-action@v3
       with:
@@ -45,7 +57,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: iamgio/quarkdown/.github/actions/setup-environment@main
+    - uses: actions/checkout@v4 # can be deleted after merge
+    - uses: ./.github/actions/setup-environment # can be changed back after merge
       with:
         full-checkout: ${{ inputs.full-checkout }}
 
@@ -78,7 +91,8 @@ jobs:
         shard: [1, 2, 3, 4]
 
     steps:
-    - uses: iamgio/quarkdown/.github/actions/setup-environment@main
+    - uses: actions/checkout@v4 # can be deleted after merge
+    - uses: ./.github/actions/setup-environment # can be changed back after merge
       with:
         full-checkout: ${{ inputs.full-checkout }}
 

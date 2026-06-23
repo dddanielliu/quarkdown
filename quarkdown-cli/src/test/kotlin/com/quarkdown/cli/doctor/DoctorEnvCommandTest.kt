@@ -17,11 +17,10 @@ class DoctorEnvCommandTest {
             .output
 
     @Test
-    fun `reports JVM, Node, and Puppeteer rows`() {
+    fun `reports JVM and Playwright rows`() {
         val output = runCommand()
         assertContains(output, "JVM")
-        assertContains(output, "Node")
-        assertContains(output, "Puppeteer")
+        assertContains(output, "Playwright")
     }
 
     @Test

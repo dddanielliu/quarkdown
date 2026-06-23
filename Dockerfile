@@ -25,13 +25,19 @@ WORKDIR build/distributions
 RUN unzip quarkdown.zip && rm quarkdown.zip
 
 # Run stage
-FROM ghcr.io/puppeteer/puppeteer:24.15.0 AS runner
+FROM mcr.microsoft.com/playwright:v1.60.0-noble AS runner
 
-ENV QD_NPM_PREFIX="/home/pptruser" \
-    NODE_PATH="/home/pptruser/node_modules" \
-    PUPPETEER_CACHE_DIR="/home/pptruser/.cache/puppeteer"
+# Install fonts present in the Puppeteer image but missing from Playwright.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        fonts-dejavu-core \
+        fonts-kacst \
+        fonts-khmeros \
+        fonts-thai-tlwg \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-USER pptruser
+USER pwuser
 WORKDIR /app
 COPY --from=builder /app/build/distributions/quarkdown quarkdown
 ENV PATH="/app/quarkdown/bin:${PATH}"
@@ -40,7 +46,7 @@ ENTRYPOINT ["quarkdown"]
 
 LABEL org.opencontainers.image.vendor="Quarkdown"
 LABEL org.opencontainers.image.title="Quarkdown Docker image"
-LABEL org.opencontainers.image.description="Versatile Markdown-based typsetting system."
+LABEL org.opencontainers.image.description="Versatile Markdown-based typesetting system."
 LABEL org.opencontainers.image.authors="Giorgio Garofalo (iamgio) <info@quarkdown.com>"
 LABEL org.opencontainers.image.url="https://quarkdown.com"
 LABEL org.opencontainers.image.source="https://github.com/iamgio/quarkdown"

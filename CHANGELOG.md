@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+### Added
+
+&nbsp;
+
+#### [Regex match](https://quarkdown.com/wiki/regex-match)
+
+The new `.match` function finds every substring of inline content that matches a regular expression and replaces each match with the inline content produced by a lambda.
+
+```markdown
+.match {Quarkdown takes its name from quarks} pattern:{[Qq]uark(down|s)?}
+    **.1**
+```
+
+Output:
+
+> **Quarkdown** takes its name from **quarks**
+
+Matches are searched within plain text leaves only, so existing inline structure such as links, emphasis, and code spans is preserved around them. The lambda receives the matched substring as its single argument, available as `.1` (or via a named parameter), and returns the inline content to insert in its place.
+
+&nbsp;
+
 ### Changed
 
 &nbsp;
@@ -28,6 +49,26 @@ Inline binding keeps working as before, so the following is still valid:
 #### Optimized argument binding
 
 Parameter lookup now performs a single pass over the arguments, improving performance.
+
+&nbsp;
+
+#### Body arguments for inline function calls
+
+Inline function calls now accept body arguments, just like block-level calls do. 
+
+The following is now valid:
+
+```markdown
+.heading depth:{1}
+    .text size:{large}
+        Content
+```
+
+Whereas previously, this was the only valid form:
+
+```markdown
+.heading {.text {Content} size:{large}} depth:{1}
+```
 
 ## [2.3.1] - 2026-06-23
 

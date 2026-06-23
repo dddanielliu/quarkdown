@@ -4,9 +4,9 @@
 
 ## [2.3.1] - 2026-06-23
 
-### Added
+## [2.3.1] - 2026-06-23
 
- 
+### Added
 
 #### GHCR image
 
@@ -14,17 +14,11 @@ An image for Quarkdown is now available on GitHub Container Registry.
 
 Thanks @dddanielliu!
 
- 
-
 ### Fixed
-
- 
 
 #### Safer `--clean`
 
 The `--clean` flag now refuses to clean the output directory in case it contains source files or git repos, or if it's the filesystem root or home directory. It also stops if the directory would (recursively) contain the source file passed to the command.
-
- 
 
 ## [2.3.0] - 2026-06-18
 
@@ -988,7 +982,9 @@ Table of contents are no longer empty if no level 1 headings are present, or if 
 
 Table cells now correctly apply the same line spacing as paragraphs and lists.
 
-[Unreleased]: https://github.com/iamgio/quarkdown/compare/v2.3.1...HEAD
+[Unreleased]: https://github.com/dddanielliu/quarkdown/compare/v2.3.1...HEAD
+
+[2.3.1]: https://github.com/dddanielliu/quarkdown/compare/v2.3.1...v2.3.1
 
 [2.3.1]: https://github.com/iamgio/quarkdown/compare/v2.3.0...v2.3.1
 

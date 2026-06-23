@@ -111,13 +111,8 @@ class PlaywrightPdfGeneratorScript(
                         .setPreferCSSPageSize(true)
 
                 if (isSinglePage) {
-                    val measuredHeight =
-                        page
-                            .evaluate(
-                                "() => Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)",
-                            ).toString()
-                            .toDouble()
-                    val height = measuredHeight * singlePageHeightMultiplier + singlePageHeightPadding
+                    val clientHeight = body.evaluate("el => el.clientHeight", null) as Number
+                    val height = clientHeight.toDouble() * singlePageHeightMultiplier + singlePageHeightPadding
                     // US Letter width (8.5in × 96dpi = 816px) matches Puppeteer's default PDF page width.
                     pdfOptions.setWidth("816px").setHeight("${height}px")
                 }

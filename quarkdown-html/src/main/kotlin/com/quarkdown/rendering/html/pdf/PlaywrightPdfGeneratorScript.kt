@@ -81,8 +81,9 @@ class PlaywrightPdfGeneratorScript(
 
             val browser: Browser = playwright.chromium().launch(launchOptions)
             try {
-                // US Letter width (8.5in at 96dpi) matches Puppeteer's default PDF page width.
-                val page: Page = browser.newPage(Browser.NewPageOptions().setViewportSize(816, 600))
+                // 800px matches Puppeteer's default viewport width, which triggers the same
+                // CSS reflow breakpoint (sm-down ≤ 800px) used during screen-mode measurement.
+                val page: Page = browser.newPage(Browser.NewPageOptions().setViewportSize(800, 600))
                 page.setDefaultNavigationTimeout(0.0)
                 page.setDefaultTimeout(0.0)
 
@@ -110,10 +111,15 @@ class PlaywrightPdfGeneratorScript(
                         .setPreferCSSPageSize(true)
 
                 if (isSinglePage) {
-                    val clientHeight = body.evaluate("el => el.clientHeight", null) as Number
-                    val height =
-                        clientHeight.toDouble() * singlePageHeightMultiplier + singlePageHeightPadding
-                    pdfOptions.setHeight("${height}px")
+                    val measuredHeight =
+                        page
+                            .evaluate(
+                                "() => Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)",
+                            ).toString()
+                            .toDouble()
+                    val height = measuredHeight * singlePageHeightMultiplier + singlePageHeightPadding
+                    // US Letter width (8.5in × 96dpi = 816px) matches Puppeteer's default PDF page width.
+                    pdfOptions.setWidth("816px").setHeight("${height}px")
                 }
 
                 page.pdf(pdfOptions)

@@ -201,6 +201,10 @@ jobs:
           org.opencontainers.image.title=Quarkdown Docker image
           org.opencontainers.image.description=Versatile Markdown-based typsetting system.
           org.opencontainers.image.url=https://quarkdown.com
+        annotations: |
+          org.opencontainers.image.title=Quarkdown Docker image
+          org.opencontainers.image.description=Versatile Markdown-based typsetting system.
+          org.opencontainers.image.url=https://quarkdown.com
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v7
